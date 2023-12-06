@@ -23,7 +23,7 @@ test('unknown options errors', () => {
   synopt.option("-n", "--name");
   expect(() => {
     synopt.parse(["-x"]);
-  }).toThrow('unknown option');
+  }).toThrow('Unknown option');
 });
 
 test('non-boolean option', () => {
@@ -44,7 +44,7 @@ test('raise if value is missing', () => {
     .option("--config");
   expect(() => {
     synopt.parse(["--name"]);
-  }).toThrow(`option '--name' requires value, because it's not boolean`);
+  }).toThrow(`Option '--name' requires value, because it's not boolean flag`);
 });
 
 test('don\'t raise if value is missing but boolean', () => {
@@ -58,7 +58,7 @@ test('missing value (end of input)', () => {
   synopt.option("--name");
   expect(() => {
     const opts = synopt.parse(["--name"]);
-  }).toThrow(`option '--name' requires value, because it's not boolean`);
+  }).toThrow(`Option '--name' requires value, because it's not boolean flag`);
 });
 
 test('missing value (next is option short or long)', () => {
@@ -67,5 +67,5 @@ test('missing value (next is option short or long)', () => {
     .option("--flat", { boolean: true });
   expect(() => {
     synopt.parse(["--name", "--flat"]);
-  }).toThrow(`option '--name' requires value, because it's not boolean`);
+  }).toThrow(`Option '--name' requires value, because it's not boolean`);
 });

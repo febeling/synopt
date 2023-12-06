@@ -34,6 +34,10 @@ type DeclarationTuple = [
   options?: OptionDeclaration
 ];
 
+type Options = {
+  [key: string]: string | boolean;
+};
+
 /**
  * Parse an option declaration list into an argument list parser
  *
@@ -60,12 +64,12 @@ const parseDeclaration = (declaration: DeclarationTuple): OptionDeclaration => {
       if (reShort.test(str)) {
         option.short = str;
       } else if (reLong.test(str)) {
-        const [_all, long, name, _x, argname] = str.match(reLong);
+        const [_all, long, name, _ignore, argname] = str.match(reLong);
         option.long = long;
         option.argname = argname || name.toUpperCase();
         option.name = name;
       } else if (option.name && !option.description) {
-        option.description = str;
+        option.description = str; // ??
       } else {
         throw new Error(`parse error: ${declaration}`);
       }
@@ -73,7 +77,7 @@ const parseDeclaration = (declaration: DeclarationTuple): OptionDeclaration => {
   }
 
   if (!option.name || !option.long) {
-    throw new Error("option name required");
+    throw new Error(`Option long-form option is required in declaration and used to derive a name: ${declaration}`);
   }
 
   return option;
@@ -89,11 +93,11 @@ const createCommand = (name?: string): Command => {
   };
 
   const command: Command = {
-    summary: text => {
+    summary: (text): Command => {
       state.summary = text;
       return command;
     },
-    description: text => {
+    description: (text): Command => {
       state.description = text;
       return command;
     },
@@ -104,15 +108,15 @@ const createCommand = (name?: string): Command => {
      * @param {string} name - The long option name, this format '--name' (two dashes, name of any length)
      * @param {string} [description] - Descriptive text of the option
      * @param {object} [options] - Options for this declaration. Example `{ boolean: true, required: true }`
-     * @return {object} The option declaration representation object
+     * @return {Command} The option declaration representation object
      */
-    option: (...args) => {
+    option: (...args): Command => {
       const declaration = parseDeclaration(args);
       state.optionDeclarations.push(declaration);
       return command;
     },
-    parse: args => {
-      const options = {};
+    parse: (args): Options => {
+      const options: Options = {};
 
       for (let i = 0; i < args.length; i++) {
         const element = args[i];
@@ -122,7 +126,7 @@ const createCommand = (name?: string): Command => {
         });
 
         if (!elementDecl) {
-          throw new Error(`unknown option (${element})`);
+          throw new Error(`Unknown option (${element})`);
         } else if (elementDecl.boolean) {
           options[elementDecl.name] = true;
         } else if (nextElement && !isOption(nextElement)) {
@@ -130,15 +134,15 @@ const createCommand = (name?: string): Command => {
           i++;
         } else {
           throw new Error(
-            `option '${element}' requires value, because it's not boolean`
+            `Option '${element}' requires value, because it's not boolean flag`
           );
         }
       }
 
       return options;
     },
-    declarations: () => state.optionDeclarations,
-    usage: () => {
+    declarations: (): OptionDeclaration[] => state.optionDeclarations,
+    usage: (): string => {
       const shorts = state.optionDeclarations.map((val, i) => val.short);
       const longs = state.optionDeclarations.map((val, i) => val.long);
       const argnames = state.optionDeclarations.map((val, i) => val.argname);
