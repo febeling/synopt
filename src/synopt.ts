@@ -1,4 +1,3 @@
-
 interface Command {
   summary: (text: string) => Command;
   description: (text: string) => Command;
@@ -38,10 +37,11 @@ type DeclarationTuple = [
 /**
  * Parse an option declaration list into an argument list parser
  *
- * The object representing the option interface also parses an argument vector into an concrete options object.
+ * The object representing the option interface also parses an argument vector
+ * into an concrete options object.
  */
 
-const parseDeclaration = (declaration: DeclarationTuple) => {
+const parseDeclaration = (declaration: DeclarationTuple): OptionDeclaration => {
   const decl = declaration.slice().reverse();
 
   const option: OptionDeclaration = {};
@@ -79,9 +79,10 @@ const parseDeclaration = (declaration: DeclarationTuple) => {
   return option;
 };
 
-const isOption = string => /^-/.test(string);
 
 const createCommand = (name?: string): Command => {
+  const isOption = string => /^-/.test(string);
+
   const state: CommandState = {
     name,
     optionDeclarations: [],
