@@ -1,0 +1,24 @@
+{
+  "name": "synopt",
+  "version": "0.1.0",
+  "description": "Command line options package",
+  "type": "module",
+  "main": "src/synopt.js",
+  "engines": {
+    "node": ">=14"
+  },
+  "scripts": {
+    "test": "NODE_OPTIONS=--experimental-vm-modules npx jest"
+  },
+  "keywords": [
+    "options",
+    "flags",
+    "shell",
+    "command"
+  ],
+  "author": "Florian Ebeling <mail@florianebeling.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "jest": "^29.7.0"
+  }
+}
