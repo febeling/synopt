@@ -10,6 +10,7 @@
   },
   "scripts": {
     "build": "tsc --declaration",
+    "clean": "rm -rf ./dist/*",
     "dev": "tsc --watch",
     "test": "tsc && NODE_OPTIONS=--experimental-vm-modules npx jest dist"
   },
