@@ -7,7 +7,7 @@
 const parseDeclaration = (arr) => {
   const decl = arr.slice().reverse();
 
-  const option = {};
+  const option: any = {};
 
   const reLong = /^(--([-\w]+?))( (\w+?)?)?$/;
   const reShort = /^-[^-]$/;
@@ -28,7 +28,7 @@ const parseDeclaration = (arr) => {
     } else if (option.name && !option.description) {
       option.description = elem;
     } else {
-      throw new Error("parse error", arr);
+      throw new Error(`parse error: ${arr}`);
     }
   }
   if (!option.name || !option.long) {
@@ -39,8 +39,8 @@ const parseDeclaration = (arr) => {
 
 const isOption = (string) => /^-/.test(string);
 
-const createCommand = (name) => {
-  const state = {
+const createCommand = (name?: string) => {
+  const state: any = {
     name,
     optionDeclarations: [],
   };

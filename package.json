@@ -3,12 +3,14 @@
   "version": "0.6.0",
   "description": "Command line options package",
   "type": "module",
-  "main": "src/synopt.js",
+  "main": "dist/synopt.js",
   "engines": {
     "node": ">=14"
   },
   "scripts": {
-    "test": "NODE_OPTIONS=--experimental-vm-modules npx jest"
+    "build": "tsc",
+    "dev": "tsc --watch",
+    "test": "NODE_OPTIONS=--experimental-vm-modules npx jest dist"
   },
   "keywords": [
     "options",
@@ -19,6 +21,11 @@
   "author": "Florian Ebeling <mail@florianebeling.com>",
   "license": "MIT",
   "devDependencies": {
-    "jest": "^29.7.0"
+    "@types/jest": "^29.5.11",
+    "jest": "^29.7.0",
+    "typescript": "^5.3.2"
+  },
+  "dependencies": {
+    "@jest/globals": "^29.7.0"
   }
 }

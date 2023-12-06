@@ -1,15 +1,16 @@
-import { createCommand } from './synopt';
+import { createCommand } from "./synopt";
+import { beforeEach, expect, test } from "@jest/globals";
 
 let synopt;
 
 beforeEach(() => {
-  synopt = createCommand('mkstuf');
+  synopt = createCommand("mkstuf");
 });
 
-test('usage banner', () => {
+test("usage banner", () => {
   synopt
-    .summary('Summary.')
-    .description('Description, which is longer.')
+    .summary("Summary.")
+    .description("Description, which is longer.")
     .option("-n", "--name NAME", "Name to be used")
     .option("-f", "--config PATH", "Path to the configuration file")
     .option("--fast", "Fast algorithm", { boolean: true });
@@ -22,6 +23,5 @@ Description, which is longer.
 
     -n,  --name NAME    Name to be used
     -f,  --config PATH  Path to the configuration file
-         --fast         Fast algorithm`
-  );
+         --fast         Fast algorithm`);
 });

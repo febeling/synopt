@@ -1,4 +1,5 @@
 import { createCommand } from './synopt';
+import {beforeEach, expect, test} from '@jest/globals';
 
 let synopt;
 
