@@ -10,7 +10,7 @@
   "scripts": {
     "build": "tsc",
     "dev": "tsc --watch",
-    "test": "NODE_OPTIONS=--experimental-vm-modules npx jest dist"
+    "test": "tsc && NODE_OPTIONS=--experimental-vm-modules npx jest dist"
   },
   "keywords": [
     "options",
