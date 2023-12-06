@@ -4,11 +4,12 @@
   "description": "Command line options package",
   "type": "module",
   "main": "dist/synopt.js",
+  "types": "dist/synopt.d.ts",
   "engines": {
     "node": ">=14"
   },
   "scripts": {
-    "build": "tsc",
+    "build": "tsc --declaration",
     "dev": "tsc --watch",
     "test": "tsc && NODE_OPTIONS=--experimental-vm-modules npx jest dist"
   },
