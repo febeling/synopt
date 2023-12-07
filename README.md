@@ -1,4 +1,4 @@
-[![Tests](https://github.com/febeling/synopt/actions/workflows/node.js.yml/badge.svg)](https://github.com/febeling/synopt/actions/workflows/node.js.yml)
+[![Node.js CI](https://github.com/febeling/synopt/actions/workflows/node.js.yml/badge.svg)](https://github.com/febeling/synopt/actions/workflows/node.js.yml)
 # SYNOPT
 
 Command line options package with narrow scope and ease of use.
