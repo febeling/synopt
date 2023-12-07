@@ -55,7 +55,7 @@ if (ok) {
 }
 ```
 
-`synopt.usage()` genertes this usage banner.
+`synopt.usage()` generates this usage banner.
 
 ```
 Usage: mkwebmanifest [options]
