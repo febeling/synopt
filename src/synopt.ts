@@ -44,7 +44,7 @@ type Result<T> = OkResult<T> | ErrorResult;
 
 const Ok = <T>(options: T): OkResult<T> => ({ ok: true, options });
 
-const Err = <T>(error: string): ErrorResult => ({
+const Err = (error: string): ErrorResult => ({
   ok: false,
   error,
 });
@@ -66,7 +66,6 @@ const parseDeclaration = (declaration: DeclarationTuple): OptionDeclaration => {
 
   while (decl.length > 0) {
     const elem = decl.pop();
-    console.log(decl.length, elem); ////
     if (decl.length === 0 && typeof elem === "object") {
       if ((elem as DeclarationOptions).boolean === true) {
         option.boolean = true;
@@ -76,7 +75,7 @@ const parseDeclaration = (declaration: DeclarationTuple): OptionDeclaration => {
       if (reShort.test(str)) {
         option.short = str;
       } else if (reLong.test(str)) {
-        const [_all, long, name, _ignore, argname] = str.match(reLong);
+        const [, long, name, , argname] = str.match(reLong);
         option.long = long;
         option.argname = argname || name.toUpperCase();
         option.name = name;
@@ -189,8 +188,8 @@ const createCommand = (name?: string): Command => {
 
       return [
         `Usage: ${state.name || "SCRIPT_NAME"} [options]`,
-        ...(!!state.summary ? ["", state.summary] : []),
-        ...(!!state.description ? ["", state.description] : []),
+        ...(state.summary ? ["", state.summary] : []),
+        ...(state.description ? ["", state.description] : []),
         "",
         ...optionHelpLines,
       ].join("\n");

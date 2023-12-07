@@ -10,12 +10,13 @@ beforeEach(() => {
 test("parse successfully", () => {
   synopt.option("--name");
   const { options, ok } = synopt.parse(["--name", "Test-1"]);
+  expect(ok).toBe(true);
   expect(options).toEqual({ name: "Test-1" });
 });
 
 test("all options are optional", () => {
   synopt.option("--name").option("--flag", { boolean: true });
-  const { options, ok, error } = synopt.parse([]);
+  const { options, ok } = synopt.parse([]);
   expect(ok).toBe(true);
   expect(options).toEqual({});
 });
