@@ -54,3 +54,19 @@ if (ok) {
   process.exit(1);
 }
 ```
+
+`synopt.usage()` genertes this usage banner.
+
+```
+Usage: mkwebmanifest [options]
+
+Generate icons and web manifest for web applications
+
+    -i,  --icon ICON           source icon file
+    -n,  --name NAME           name of the web application
+         --config FILE         configuration file
+         --outdir <directory>  directory path for generated files
+         --verbose             more output
+    -h,  --help                print help
+
+```
