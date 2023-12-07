@@ -1,4 +1,5 @@
 [![Node.js CI](https://github.com/febeling/synopt/actions/workflows/node.js.yml/badge.svg)](https://github.com/febeling/synopt/actions/workflows/node.js.yml)
+[![npm version](https://badge.fury.io/js/synopt.svg)](https://badge.fury.io/js/synopt)
 
 # SYNOPT
 
