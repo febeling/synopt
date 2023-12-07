@@ -66,6 +66,7 @@ const parseDeclaration = (declaration: DeclarationTuple): OptionDeclaration => {
 
   while (decl.length > 0) {
     const elem = decl.pop();
+    console.log(decl.length, elem); ////
     if (decl.length === 0 && typeof elem === "object") {
       if ((elem as DeclarationOptions).boolean === true) {
         option.boolean = true;
@@ -80,7 +81,7 @@ const parseDeclaration = (declaration: DeclarationTuple): OptionDeclaration => {
         option.argname = argname || name.toUpperCase();
         option.name = name;
       } else if (option.name && !option.description) {
-        option.description = str; // ??
+        option.description = str;
       } else {
         throw new Error(`parse error: ${declaration}`);
       }

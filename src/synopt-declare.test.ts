@@ -30,23 +30,23 @@ test("name default to same in uppercase", () => {
 });
 
 test("name with dash", () => {
-  synopt.option("--short-name");
+  synopt.option("--full-name");
   expect(synopt.declarations()).toEqual([
     {
-      name: "short-name",
-      long: "--short-name",
-      argname: "SHORT-NAME",
+      name: "full-name",
+      long: "--full-name",
+      argname: "FULL-NAME",
     },
   ]);
 });
 
 test("name with underscore", () => {
-  synopt.option("--short_name");
+  synopt.option("--full_name");
   expect(synopt.declarations()).toEqual([
     {
-      name: "short_name",
-      long: "--short_name",
-      argname: "SHORT_NAME",
+      name: "full_name",
+      long: "--full_name",
+      argname: "FULL_NAME",
     },
   ]);
 });
@@ -72,7 +72,7 @@ test("option flag, short name", () => {
 test("only short throws", () => {
   expect(() => {
     synopt.option("-n");
-  }).toThrow();
+  }).toThrow('Option long-form option is required in declaration and used to derive a name: -n');
 });
 
 test("description", () => {
@@ -83,6 +83,31 @@ test("description", () => {
       long: "--num",
       argname: "NUM",
       description: "The number of it",
+    },
+  ]);
+});
+
+test("description can start like a long option", () => {
+  synopt.option("--num", "--num defines the number");
+  expect(synopt.declarations()).toEqual([
+    {
+      argname: "NUM",
+      name: "num",
+      long: "--num",
+      description: "--num defines the number",
+    },
+  ]);
+});
+
+test("short can appear after long option", () => {
+  synopt.option("--num", "-n", "desc");
+  expect(synopt.declarations()).toEqual([
+    {
+      argname: "NUM",
+      name: "num",
+      long: "--num",
+      short: "-n",
+      description: "desc",
     },
   ]);
 });
