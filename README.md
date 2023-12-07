@@ -30,10 +30,10 @@ import synopt from "synopt";
 synopt
   .name("mkwebmanifest") // optional, for usage banner
   .summary("Generate icons and web manifest for web applications")
-  .option("-i", "--icon", "source icon file")
+  .option("-i", "--icon ICON", "source icon file")
   .option("-n", "--name", "name of the web application", { repeat: true })
-  .option("--config", "configuration file")
-  .option("--outdir", "directory path for generated files")
+  .option("--config FILE", "configuration file")
+  .option("--outdir <directory>", "directory path for generated files")
   .option("--verbose", "more output", { boolean: true })
   .option("-h", "--help", "print help", { boolean: true });
 
