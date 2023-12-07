@@ -138,3 +138,15 @@ test("repeat option", () => {
     },
   ]);
 });
+
+test("error when declared again", () => {
+  expect(() => {
+    synopt.option("--name").option("--name");
+  }).toThrow("Duplicate option (--name)");
+});
+
+test("error when short option declared again", () => {
+  expect(() => {
+    synopt.option("--factor", "-f").option("--file", "-f");
+  }).toThrow("Duplicate short option (-f)");
+});

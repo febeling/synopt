@@ -101,6 +101,14 @@ const parseDeclaration = (declaration: DeclarationTuple): OptionDeclaration => {
   return option;
 };
 
+const ensureNamesUnique = (declaration, declarations): void => {
+  const { long, short } = declaration;
+  if (declarations.find((d) => d.long === long))
+    throw new Error(`Duplicate option (${long})`);
+  if (short && declarations.find((d) => d.short === short))
+    throw new Error(`Duplicate short option (${short})`);
+};
+
 const createCommand = (name?: string): Command => {
   const isOption = (string) => /^-/.test(string);
 
@@ -129,6 +137,7 @@ const createCommand = (name?: string): Command => {
      */
     option: (...args): Command => {
       const declaration = parseDeclaration(args);
+      ensureNamesUnique(declaration, state.optionDeclarations);
       state.optionDeclarations.push(declaration);
       return command;
     },
