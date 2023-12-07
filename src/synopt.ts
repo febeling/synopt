@@ -41,13 +41,11 @@ type Options = {
   [key: string]: boolean | string | string[];
 };
 
-type ErrorResult = { ok: false; error: string };
-type OkResult<T> = { ok: true; options: T };
-type Result<T> = OkResult<T> | ErrorResult;
+type Result<T> = { ok: false; error: string } | { ok: true; options: T };
 
-const Ok = <T>(options: T): OkResult<T> => ({ ok: true, options });
+const Ok = <T>(options: T): Result<T> => ({ ok: true, options });
 
-const Err = (error: string): ErrorResult => ({
+const Err = <T>(error: string): Result<T> => ({
   ok: false,
   error,
 });
@@ -140,13 +138,13 @@ const createCommand = (name?: string): Command => {
      * @param {object} [options] - Options for this declaration. Example `{ boolean: true, required: true }`
      * @return {Command} The option declaration representation object
      */
-    option: (...args): Command => {
+    option: (...args: DeclarationTuple): Command => {
       const declaration = parseDeclaration(args);
       ensureNamesUnique(declaration, state.optionDeclarations);
       state.optionDeclarations.push(declaration);
       return command;
     },
-    parse: (args): Result<Options> => {
+    parse: (args: string[]): Result<Options> => {
       const options: Options = {};
 
       try {
