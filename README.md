@@ -38,10 +38,10 @@ synopt
   .option("--verbose", "more output", { boolean: true })
   .option("-h", "--help", "print help", { boolean: true });
 
-// Slice off node executable and script
+// Slice off node executable and script from argument vector
 const argv = process.argv.slice(2);
 
-// And parse arguments. No exceptions to catch, just check result object
+// And parse arguments. No exceptions to catch, instead check result object
 const { ok, error, options } = synopt.parse(argv);
 
 if (ok) {
