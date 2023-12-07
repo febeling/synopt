@@ -38,6 +38,17 @@ type Options = {
   [key: string]: string | boolean;
 };
 
+type ErrorResult = { ok: false; error: string };
+type OkResult<T> = { ok: true; options: T };
+type Result<T> = OkResult<T> | ErrorResult;
+
+const Ok = <T>(options: T): OkResult<T> => ({ ok: true, options });
+
+const Err = <T>(error: string): ErrorResult => ({
+  ok: false,
+  error,
+});
+
 /**
  * Parse an option declaration list into an argument list parser
  *
@@ -77,12 +88,13 @@ const parseDeclaration = (declaration: DeclarationTuple): OptionDeclaration => {
   }
 
   if (!option.name || !option.long) {
-    throw new Error(`Option long-form option is required in declaration and used to derive a name: ${declaration}`);
+    throw new Error(
+      `Option long-form option is required in declaration and used to derive a name: ${declaration}`
+    );
   }
 
   return option;
 };
-
 
 const createCommand = (name?: string): Command => {
   const isOption = string => /^-/.test(string);
@@ -115,39 +127,43 @@ const createCommand = (name?: string): Command => {
       state.optionDeclarations.push(declaration);
       return command;
     },
-    parse: (args): Options => {
+    parse: (args): Result<Options> => {
       const options: Options = {};
 
-      for (let i = 0; i < args.length; i++) {
-        const element = args[i];
-        const nextElement = args[i + 1];
-        const elementDecl = state.optionDeclarations.find(decl => {
-          return decl.long === element || decl.short === element;
-        });
+      try {
+        for (let i = 0; i < args.length; i++) {
+          const element = args[i];
+          const nextElement = args[i + 1];
+          const elementDecl = state.optionDeclarations.find(decl => {
+            return decl.long === element || decl.short === element;
+          });
 
-        if (!elementDecl) {
-          throw new Error(`Unknown option (${element})`);
-        } else if (elementDecl.boolean) {
-          options[elementDecl.name] = true;
-        } else if (nextElement && !isOption(nextElement)) {
-          options[elementDecl.name] = nextElement;
-          i++;
-        } else {
-          throw new Error(
-            `Option '${element}' requires value, because it's not boolean flag`
-          );
+          if (!elementDecl) {
+            throw new Error(`Unknown option (${element})`);
+          } else if (elementDecl.boolean) {
+            options[elementDecl.name] = true;
+          } else if (nextElement && !isOption(nextElement)) {
+            options[elementDecl.name] = nextElement;
+            i++;
+          } else {
+            throw new Error(
+              `Option '${element}' requires value, because it's not boolean flag`
+            );
+          }
         }
+      } catch (error) {
+        return Err(error.message);
       }
 
-      return options;
+      return Ok(options);
     },
     declarations: (): OptionDeclaration[] => state.optionDeclarations,
     usage: (): string => {
-      const shorts = state.optionDeclarations.map((val, i) => val.short);
-      const longs = state.optionDeclarations.map((val, i) => val.long);
-      const argnames = state.optionDeclarations.map((val, i) => val.argname);
+      const shorts = state.optionDeclarations.map((val) => val.short);
+      const longs = state.optionDeclarations.map((val) => val.long);
+      const argnames = state.optionDeclarations.map((val) => val.argname);
       const descriptions = state.optionDeclarations.map(
-        (val, i) => val.description
+        (val) => val.description
       );
 
       const longMax = Math.max(
