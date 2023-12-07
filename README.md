@@ -26,7 +26,7 @@ import synopt from 'synopt';
 
 // Declare options
 synopt
-  .name('mkwebmanifest')
+  .name('mkwebmanifest') // optional, for usage banner
   .summary("Generate icons and web manifest for web applications")
   .option("-i", "--icon", "source icon file")
   .option("-n", "--name", "name of the web application")
