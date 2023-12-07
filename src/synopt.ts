@@ -31,7 +31,7 @@ type DeclarationTuple = [
   name: string,
   alias?: string,
   description?: string,
-  options?: OptionDeclaration
+  options?: OptionDeclaration,
 ];
 
 type Options = {
@@ -90,7 +90,7 @@ const parseDeclaration = (declaration: DeclarationTuple): OptionDeclaration => {
 
   if (!option.name || !option.long) {
     throw new Error(
-      `Option long-form option is required in declaration and used to derive a name: ${declaration}`
+      `Option long-form option is required in declaration and used to derive a name: ${declaration}`,
     );
   }
 
@@ -98,7 +98,7 @@ const parseDeclaration = (declaration: DeclarationTuple): OptionDeclaration => {
 };
 
 const createCommand = (name?: string): Command => {
-  const isOption = string => /^-/.test(string);
+  const isOption = (string) => /^-/.test(string);
 
   const state: CommandState = {
     name,
@@ -135,7 +135,7 @@ const createCommand = (name?: string): Command => {
         for (let i = 0; i < args.length; i++) {
           const element = args[i];
           const nextElement = args[i + 1];
-          const elementDecl = state.optionDeclarations.find(decl => {
+          const elementDecl = state.optionDeclarations.find((decl) => {
             return decl.long === element || decl.short === element;
           });
 
@@ -148,7 +148,7 @@ const createCommand = (name?: string): Command => {
             i++;
           } else {
             throw new Error(
-              `Option '${element}' requires value, because it's not boolean flag`
+              `Option '${element}' requires value, because it's not boolean flag`,
             );
           }
         }
@@ -164,7 +164,7 @@ const createCommand = (name?: string): Command => {
       const longs = state.optionDeclarations.map((val) => val.long);
       const argnames = state.optionDeclarations.map((val) => val.argname);
       const descriptions = state.optionDeclarations.map(
-        (val) => val.description
+        (val) => val.description,
       );
 
       const longMax = Math.max(
@@ -174,10 +174,10 @@ const createCommand = (name?: string): Command => {
             len += argnames[i].length + 1;
           }
           return len;
-        })
+        }),
       );
 
-      const anyShorts = shorts.filter(x => x).length > 0;
+      const anyShorts = shorts.filter((x) => x).length > 0;
 
       const optionHelpLines = longs.map((long, i) => {
         return `    ${

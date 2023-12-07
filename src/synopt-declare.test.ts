@@ -72,7 +72,9 @@ test("option flag, short name", () => {
 test("only short throws", () => {
   expect(() => {
     synopt.option("-n");
-  }).toThrow('Option long-form option is required in declaration and used to derive a name: -n');
+  }).toThrow(
+    "Option long-form option is required in declaration and used to derive a name: -n",
+  );
 });
 
 test("description", () => {

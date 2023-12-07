@@ -14,9 +14,7 @@ test("parse successfully", () => {
 });
 
 test("all options are optional", () => {
-  synopt
-    .option("--name")
-    .option("--flag", { boolean: true });
+  synopt.option("--name").option("--flag", { boolean: true });
   const { options, ok, error } = synopt.parse([]);
   expect(ok).toBe(true);
   expect(options).toEqual({});
@@ -67,7 +65,7 @@ test("error if value is missing", () => {
   const { ok, error } = synopt.parse(["--name"]);
   expect(ok).toBe(false);
   expect(error).toBe(
-    `Option '--name' requires value, because it's not boolean flag`
+    `Option '--name' requires value, because it's not boolean flag`,
   );
 });
 
@@ -83,7 +81,7 @@ test("missing value (end of input)", () => {
   const { ok, error } = synopt.parse(["--name"]);
   expect(ok).toBe(false);
   expect(error).toBe(
-    `Option '--name' requires value, because it's not boolean flag`
+    `Option '--name' requires value, because it's not boolean flag`,
   );
 });
 
@@ -92,6 +90,6 @@ test("missing value (next is option short or long)", () => {
   const { ok, error } = synopt.parse(["--name", "--flat"]);
   expect(ok).toBe(false);
   expect(error).toBe(
-    `Option '--name' requires value, because it's not boolean flag`
+    `Option '--name' requires value, because it's not boolean flag`,
   );
 });
