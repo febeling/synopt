@@ -63,7 +63,7 @@ const parseDeclaration = (declaration: DeclarationTuple): OptionDeclaration => {
 
   const option: OptionDeclaration = {};
 
-  const reLong = /^(--([-\w]+?))( (\w+?)?)?$/;
+  const reLong = /^(--([-\w]+?))( (<?\w+?>?)?)?$/;
   const reShort = /^-[^-]$/;
 
   while (decl.length > 0) {
@@ -87,7 +87,7 @@ const parseDeclaration = (declaration: DeclarationTuple): OptionDeclaration => {
       } else if (option.name && !option.description) {
         option.description = str;
       } else {
-        throw new Error(`parse error: ${declaration}`);
+        throw new Error(`Declaration error: ${declaration}`);
       }
     }
   }

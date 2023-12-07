@@ -51,6 +51,17 @@ test("name with underscore", () => {
   ]);
 });
 
+test("argname with angle brackets", () => {
+  synopt.option("--full_name <string>");
+  expect(synopt.declarations()).toEqual([
+    {
+      name: "full_name",
+      long: "--full_name",
+      argname: "<string>",
+    },
+  ]);
+});
+
 test("name is required", () => {
   expect(() => {
     synopt.option();
