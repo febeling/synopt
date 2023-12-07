@@ -94,3 +94,15 @@ test("missing value (next is option short or long)", () => {
     `Option '--name' requires value, because it's not boolean flag`,
   );
 });
+
+test("repeat options to array", () => {
+  synopt.option("--domain NAME", { repeat: true });
+  const { ok, options } = synopt.parse([
+    "--domain",
+    "brilliant",
+    "--domain",
+    "logical,wrong",
+  ]);
+  expect(ok).toBe(true);
+  expect(options).toEqual({ domain: ["brilliant", "logical", "wrong"] });
+});

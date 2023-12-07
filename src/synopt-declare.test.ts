@@ -126,3 +126,15 @@ test("boolean", () => {
     },
   ]);
 });
+
+test("repeat option", () => {
+  synopt.option("--domain NAME", { repeat: true });
+  expect(synopt.declarations()).toEqual([
+    {
+      name: "domain",
+      argname: "NAME",
+      long: "--domain",
+      repeat: true,
+    },
+  ]);
+});

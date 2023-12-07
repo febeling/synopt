@@ -9,6 +9,7 @@ interface Command {
 
 interface OptionDeclaration {
   boolean?: boolean;
+  repeat?: boolean;
   short?: string;
   argname?: string;
   long?: string;
@@ -25,6 +26,7 @@ interface CommandState {
 
 interface DeclarationOptions {
   boolean?: boolean;
+  repeat?: boolean;
 }
 
 type DeclarationTuple = [
@@ -35,7 +37,7 @@ type DeclarationTuple = [
 ];
 
 type Options = {
-  [key: string]: string | boolean;
+  [key: string]: boolean | string | string[];
 };
 
 type ErrorResult = { ok: false; error: string };
@@ -67,8 +69,11 @@ const parseDeclaration = (declaration: DeclarationTuple): OptionDeclaration => {
   while (decl.length > 0) {
     const elem = decl.pop();
     if (decl.length === 0 && typeof elem === "object") {
-      if ((elem as DeclarationOptions).boolean === true) {
+      if ((elem as DeclarationOptions).boolean) {
         option.boolean = true;
+      }
+      if ((elem as DeclarationOptions).repeat) {
+        option.repeat = true;
       }
     } else {
       const str = elem as string;
@@ -143,7 +148,14 @@ const createCommand = (name?: string): Command => {
           } else if (elementDecl.boolean) {
             options[elementDecl.name] = true;
           } else if (nextElement && !isOption(nextElement)) {
-            options[elementDecl.name] = nextElement;
+            if (elementDecl.repeat) {
+              options[elementDecl.name] ||= [];
+              (options[elementDecl.name] as string[]).push(
+                ...nextElement.split(","),
+              );
+            } else {
+              options[elementDecl.name] = nextElement;
+            }
             i++;
           } else {
             throw new Error(

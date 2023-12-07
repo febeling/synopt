@@ -1,4 +1,5 @@
 [![Node.js CI](https://github.com/febeling/synopt/actions/workflows/node.js.yml/badge.svg)](https://github.com/febeling/synopt/actions/workflows/node.js.yml)
+
 # SYNOPT
 
 Command line options package with narrow scope and ease of use.
@@ -13,6 +14,7 @@ Command line options package with narrow scope and ease of use.
 ## More Features
 
 - support boolean options (flags)
+- support repeat options (`-n first -n second,third` to `["first", "second", "third"]`)
 - long and short option names (e.g. `-s`, `--long`)
 - no assumptions about defaults (leave room for config files, and env vars)
 - no assumptions about subcommands (but easy to accomodate)
@@ -22,24 +24,24 @@ Command line options package with narrow scope and ease of use.
 ## Example Usage
 
 ```js
-import synopt from 'synopt';
+import synopt from "synopt";
 
 // Declare options
 synopt
-  .name('mkwebmanifest') // optional, for usage banner
+  .name("mkwebmanifest") // optional, for usage banner
   .summary("Generate icons and web manifest for web applications")
   .option("-i", "--icon", "source icon file")
-  .option("-n", "--name", "name of the web application")
+  .option("-n", "--name", "name of the web application", { repeat: true })
   .option("--config", "configuration file")
   .option("--outdir", "directory path for generated files")
-  .option("--verbose", "print more information the console", { boolean: true })
-  .option("-h", "--help", "print information about options", { boolean: true });
+  .option("--verbose", "more output", { boolean: true })
+  .option("-h", "--help", "print help", { boolean: true });
 
 // Slice off node executable and script
 const argv = process.argv.slice(2);
 
 // Destructure result
-const { ok, error, options } = synopt.parse(argv)
+const { ok, error, options } = synopt.parse(argv);
 
 if (ok) {
   main(options);
