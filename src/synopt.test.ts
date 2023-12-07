@@ -4,11 +4,12 @@ import { beforeEach, expect, test } from "@jest/globals";
 let synopt;
 
 beforeEach(() => {
-  synopt = createCommand("mkstuf");
+  synopt = createCommand();
 });
 
 test("usage banner", () => {
   synopt
+    .name("mkstuf")
     .summary("Summary.")
     .description("Description, which is longer.")
     .option("-n", "--name NAME", "Name to be used")

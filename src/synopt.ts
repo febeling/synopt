@@ -1,4 +1,5 @@
 interface Command {
+  name: (text: string) => Command;
   summary: (text: string) => Command;
   description: (text: string) => Command;
   option: (...args: DeclarationTuple) => Command;
@@ -118,6 +119,10 @@ const createCommand = (name?: string): Command => {
   };
 
   const command: Command = {
+    name: (text): Command => {
+      state.name = text;
+      return command;
+    },
     summary: (text): Command => {
       state.summary = text;
       return command;
