@@ -1,6 +1,6 @@
 {
   "name": "synopt",
-  "version": "0.7.0",
+  "version": "0.7.1",
   "description": "Command line options package",
   "type": "module",
   "main": "dist/synopt.js",
