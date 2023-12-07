@@ -12,6 +12,7 @@
     "build": "tsc --declaration",
     "clean": "rm -rf ./dist/*",
     "dev": "tsc --watch",
+    "lint": "npx eslint ./src",
     "test": "tsc --declaration && NODE_OPTIONS=--experimental-vm-modules npx jest dist"
   },
   "keywords": [
@@ -24,6 +25,9 @@
   "license": "MIT",
   "devDependencies": {
     "@types/jest": "^29.5.11",
+    "@typescript-eslint/eslint-plugin": "^6.13.2",
+    "@typescript-eslint/parser": "^6.13.2",
+    "eslint": "^8.55.0",
     "jest": "^29.7.0",
     "typescript": "^5.3.2"
   },
