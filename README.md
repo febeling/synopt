@@ -40,10 +40,11 @@ synopt
 // Slice off node executable and script
 const argv = process.argv.slice(2);
 
-// Destructure result
+// And parse arguments. No exceptions to catch, just check result object
 const { ok, error, options } = synopt.parse(argv);
 
 if (ok) {
+  // Happy case
   main(options);
 } else {
   // Handle errors: missing value, or unknown options/typos, etc.
