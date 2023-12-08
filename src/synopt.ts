@@ -151,22 +151,34 @@ const createCommand = (name?: string): Command => {
         for (let i = 0; i < args.length; i++) {
           const element = args[i];
           const nextElement = args[i + 1];
-          const elementDecl = state.optionDeclarations.find((decl) => {
-            return decl.long === element || decl.short === element;
+
+          const decl = state.optionDeclarations.find((d) => {
+            return (
+              element === d.long ||
+              element.startsWith(d.long + "=") ||
+              element.startsWith(d.short)
+            );
           });
 
-          if (!elementDecl) {
+          if (!decl) {
             throw new Error(`Unknown option (${element})`);
-          } else if (elementDecl.boolean) {
-            options[elementDecl.name] = true;
+          } else if (decl.boolean) {
+            options[decl.name] = true;
+          } else if (element.startsWith(decl.long + "=")) {
+            const value = element.substring(decl.long.length + 1);
+            options[decl.name] = value;
+          } else if (
+            element.startsWith(decl.short) &&
+            element.length > decl.short.length
+          ) {
+            const value = element.substring(2);
+            options[decl.name] = value;
           } else if (nextElement && !isOption(nextElement)) {
-            if (elementDecl.repeat) {
-              options[elementDecl.name] ||= [];
-              (options[elementDecl.name] as string[]).push(
-                ...nextElement.split(","),
-              );
+            if (decl.repeat) {
+              options[decl.name] ||= [];
+              (options[decl.name] as string[]).push(...nextElement.split(","));
             } else {
-              options[elementDecl.name] = nextElement;
+              options[decl.name] = nextElement;
             }
             i++;
           } else {

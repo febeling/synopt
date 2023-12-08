@@ -14,6 +14,20 @@ test("parse successfully", () => {
   expect(options).toEqual({ name: "Test-1" });
 });
 
+test("parse long form with equal sign", () => {
+  synopt.option("--name");
+  const { options, ok } = synopt.parse(["--name=Test-1"]);
+  expect(ok).toBe(true);
+  expect(options).toEqual({ name: "Test-1" });
+});
+
+test("parse short form with value appended", () => {
+  synopt.option("-n", "--name");
+  const { options, ok } = synopt.parse(["-nTest-1"]);
+  expect(ok).toBe(true);
+  expect(options).toEqual({ name: "Test-1" });
+});
+
 test("all options are optional", () => {
   synopt.option("--name").option("--flag", { boolean: true });
   const { options, ok } = synopt.parse([]);
