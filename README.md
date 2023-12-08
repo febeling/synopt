@@ -17,6 +17,8 @@ Command line options package with narrow scope and ease of use.
 - support boolean options (flags)
 - support repeat options (`-n first -n second,third` to `["first", "second", "third"]`)
 - long and short option names (e.g. `-s`, `--long`)
+- use `=` for long format option value (`--name=val`)
+- append value to short format option (`-nval`)
 - no assumptions about defaults (leave room for config files, and env vars)
 - no assumptions about subcommands (but easy to accomodate)
 - explicit failure result instead of exceptions
