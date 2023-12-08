@@ -89,7 +89,7 @@ const store = createCommand("store")
 
 ## Command API
 
-`option([short], long, [description], [options])`
+**`option([short], long, [description], [options])`**
 
 Declares an option. Only the `long` form (`--task NAME`) is required, which consists of two dashes (`--`) and the options name, optionally followed by the argument name to be shown in the usage banner (`NAME`). If the argument name is left off, the option name will be assumed (e.g. `--task TASK`).
 
@@ -102,29 +102,29 @@ The options to the declaration are passed as an object. `boolean` indicates an o
 `option` can be chained, because it returns the command itself.
 ``
 
-`summary(text)`
+**`summary(text)`**
 
 This sets a summary text to be show on the usage banner. Returns the command itself for chaining.
 
-`description(text)`
+**`description(text)`**
 
 This sets a description to be show on the usage banner, below the summary. Returns the command itself for chaining.
 
-`name(text)`
+**`name(text)`**
 
 This sets a name to be show on the usage banner. Returns the command itself for chaining.
 
-`parse(argv)`
+**`parse(argv)`**
 
 Parse the arguments from the command line against the declared options and never throws an exception. Returns an result object of `{ ok, options, error }`. Check `ok` for success of the parsing of the `options`, and display `error` to inform the user of problems.
 
 The option object has this structure: `string` to `string | boolean | string[]`. The value is `string`, unless it's declared a `boolean` option, or a repeat option (`string[]`).
 
-`usage()`
+**`usage()`**
 
 Return the usage banner as a string.
 
-`createCommand([name])`
+**`createCommand([name])`**
 
 Create a command object, with an optional name. In many cases the name should be the executable, but sometimes an executable has subcommands with separate option interfaces each. Theses are best represented by a separated command.
 
