@@ -91,13 +91,13 @@ const store = createCommand("store")
 
 **`option([short], long, [description], [options])`**
 
-Declares an option. Only the `long` form (`--task NAME`) is required, which consists of two dashes (`--`) and the options name, optionally followed by the argument name to be shown in the usage banner (`NAME`). If the argument name is left off, the option name will be assumed (e.g. `--task TASK`).
+Declares an option. Only the `long` form (`--task NAME`) is required, which consists of two dashes (`--`) and the option's name, optionally followed by the argument name to be shown in the usage banner (`NAME`). If the argument name is left off, the option name will be assumed (e.g. `--task TASK`).
 
-The optional `short` form starts with a single dash (`-`), followed by a single letter. This form can appear first or second position of parameters.
+The optional `short` form starts with a single dash (`-`), followed by a single letter. This form can appear in first or second position of parameters.
 
-The optional description explains the meaning of the option, including if it's mandatory, or has specific legal values or other contstraints.
+The optional description explains the meaning of the option, e.g. you can say if it's mandatory, or has certain legal values, or other contstraints.
 
-The options to the declaration are passed as an object. `boolean` indicates an option which doesn't require a value (e.g. cases like typical `--quiet` or `--dry-run`).
+The declaration options are passed as an object in last position of the arguments. `boolean` indicates an option which doesn't require a value (e.g. typical cases are `--quiet` or `--dry-run`).
 
 `option` can be chained, because it returns the command itself.
 ``
@@ -126,6 +126,6 @@ Return the usage banner as a string.
 
 **`createCommand([name])`**
 
-Create a command object, with an optional name. In many cases the name should be the executable, but sometimes an executable has subcommands with separate option interfaces each. Theses are best represented by a separated command.
+Create a command object, with an optional name. In many cases the name should be the executable, but sometimes an executable has subcommands with separate option interfaces each. You can create a command object for each subcommand.
 
 If you use the convenience default `import synopt from 'synopt;`, this is a command without a name set yet.
