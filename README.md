@@ -23,6 +23,7 @@ Command line options package with narrow scope and ease of use.
 - no assumptions about subcommands (but easy to accomodate)
 - explicit failure result instead of exceptions
 - full Typescript
+- zero dependencies
 
 ## Example Usage
 
@@ -93,7 +94,7 @@ const store = createCommand("store")
 
 Declares an option. Only the `long` form (`--task NAME`) is required, which consists of two dashes (`--`) and the option's name, optionally followed by the argument name to be shown in the usage banner (`NAME`). If the argument name is left off, the option name will be assumed (e.g. `--task TASK`).
 
-The optional `short` form starts with a single dash (`-`), followed by a single letter. This form can appear in first or second position of parameters.
+The optional `short` form starts with a single dash (`-`), followed by a single letter. This form can appear as first or second positional parameter.
 
 The optional description explains the meaning of the option, e.g. you can say if it's mandatory, or has certain legal values, or other contstraints.
 
