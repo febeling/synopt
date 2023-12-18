@@ -101,7 +101,6 @@ The optional description explains the meaning of the option, e.g. you can say if
 The declaration options are passed as an object in last position of the arguments. `boolean` indicates an option which doesn't require a value (e.g. typical cases are `--quiet` or `--dry-run`).
 
 `option` can be chained, because it returns the command itself.
-``
 
 **`summary(text)`**
 
