@@ -8,7 +8,7 @@ interface Command {
   usage: () => string;
 }
 
-interface OptionDeclaration {
+type OptionDeclaration = {
   boolean?: boolean;
   repeat?: boolean;
   short?: string;
@@ -16,19 +16,19 @@ interface OptionDeclaration {
   long?: string;
   name?: string;
   description?: string;
-}
+};
 
-interface CommandState {
+type CommandState = {
   name?: string;
   optionDeclarations: OptionDeclaration[];
   summary?: string;
   description?: string;
-}
+};
 
-interface DeclarationOptions {
+type DeclarationOptions = {
   boolean?: boolean;
   repeat?: boolean;
-}
+};
 
 type DeclarationTuple = [
   name: string,
