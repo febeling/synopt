@@ -129,15 +129,6 @@ const createCommand = (name?: string): Command => {
       state.description = text;
       return command;
     },
-    /**
-     * An option declaration.
-     *
-     * @param {string} [short] - The short form of the option, with this format '-f'
-     * @param {string} name - The long option name, this format '--name' (two dashes, name of any length)
-     * @param {string} [description] - Descriptive text of the option
-     * @param {object} [options] - Options for this declaration. Example `{ boolean: true, required: true }`
-     * @return {Command} The option declaration representation object
-     */
     option: (...args: DeclarationTuple): Command => {
       const declaration = parseDeclaration(args);
       ensureNamesUnique(declaration, state.optionDeclarations);
