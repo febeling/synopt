@@ -36,7 +36,10 @@
   ],
   "author": "Florian Ebeling <mail@florianebeling.com>",
   "homepage": "https://github.com/febeling/synopt",
-  "repository": "github.com:febeling/synopt",
+  "repository": {
+    "type": "git",
+    "url": "github.com:febeling/synopt"
+  },
   "license": "MIT",
   "devDependencies": {
     "@types/jest": "^29.5.11",
